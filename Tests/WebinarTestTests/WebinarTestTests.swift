@@ -13,6 +13,13 @@ final class WebinarTestTests: XCTestCase {
         }
     }
 
+    func testZeroRecords() throws {
+        let input = try generateTestData(count: 0, timeRange: 0..<1)
+
+        var iterator = try iterateOverRecords(inputData: input)
+        XCTAssertNil(iterator.next())
+    }
+
     /// Generates array of `RecordJson` with serial `id` and random `time`
     private func generateRecords(count: Int, timeRange: Range<Int> = -1_000..<1_000) -> [RecordJson] {
         (0..<count).map { index -> RecordJson in
