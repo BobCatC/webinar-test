@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct RecordJson: Equatable, Hashable, Codable {
-    var id: Int
-    var time: Int
-    var name: String
+public struct RecordJson: Equatable, Hashable, Codable {
+    public var id: Int
+    public var time: Int
+    public var name: String
 }

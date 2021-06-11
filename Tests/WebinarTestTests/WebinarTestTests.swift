@@ -2,18 +2,22 @@ import XCTest
 @testable import WebinarTest
 
 final class WebinarTestTests: XCTestCase {
-    func testExample() {
-        
-    }
+    func testIterateOverRecords() throws {
+        let input = try generateTestData(count: 10_000, timeRange: -10_000..<10_000)
 
-    static var allTests = [
-        ("testExample", testExample),
-    ]
+        // Testable function
+        var iterator = try iterateOverRecords(inputData: input)
+
+        while let name = iterator.next() {
+            print(name)
+        }
+    }
 
     /// Generates array of `RecordJson` with serial `id` and random `time`
     private func generateRecords(count: Int, timeRange: Range<Int> = -1_000..<1_000) -> [RecordJson] {
         (0..<count).map { index -> RecordJson in
-            RecordJson(id: index, time: Int.random(in: timeRange), name: "name-\(index)")
+            let time = Int.random(in: timeRange)
+            return RecordJson(id: index, time: time, name: "name-\(index), time: \(time)")
         }
     }
 
