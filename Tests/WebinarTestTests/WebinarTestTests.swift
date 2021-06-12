@@ -2,6 +2,17 @@ import XCTest
 @testable import WebinarTest
 
 final class WebinarTestTests: XCTestCase {
+    func testSimpleImplementation() throws {
+        let input = try generateTestData(count: 100, timeRange: -100..<100)
+
+        // Testable function
+        let sortedNames = try iterateOverRecordsSimple(inputData: input)
+
+        for name in sortedNames {
+            print(name)
+        }
+    }
+
     func testIterateTimeAsc() throws {
         let records = [RecordJson(id: 1, time: 1, name: "1"), RecordJson(id: 2, time: 2, name: "2")]
         let input = try JSONEncoder().encode(records)

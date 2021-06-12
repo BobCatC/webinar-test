@@ -13,6 +13,12 @@ public func iterateOverRecords(inputData data: Data, timeAsc: Bool = true) throw
     return records.nameIterator(timeAsc: timeAsc)
 }
 
+/// Returns array of names sorted by time
+public func iterateOverRecordsSimple(inputData data: Data) throws -> [String] {
+    let records = try JSONDecoder().decode([RecordJson].self, from: data)
+    return records.sorted(by: { $0.time < $1.time }).map(\.name)
+}
+
 public extension Array where Element == RecordJson {
     /// Creates an iterator over `time` sorted records to access `name` field
     func nameIterator(timeAsc: Bool = true) -> NameIterator {
