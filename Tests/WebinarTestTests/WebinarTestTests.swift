@@ -2,12 +2,47 @@ import XCTest
 @testable import WebinarTest
 
 final class WebinarTestTests: XCTestCase {
+    func testIterateTimeAsc() throws {
+        let records = [RecordJson(id: 1, time: 1, name: "1"), RecordJson(id: 2, time: 2, name: "2")]
+        let input = try JSONEncoder().encode(records)
+
+        // Testable function
+        var iterator = try iterateOverRecords(inputData: input, timeAsc: true)
+
+        let first = iterator.next()
+        let second = iterator.next()
+
+        XCTAssertNotNil(first)
+        XCTAssertNotNil(second)
+
+        XCTAssertEqual(first, "1")
+        XCTAssertEqual(second, "2")
+    }
+
+    func testIterateTimeDesc() throws {
+        let records = [RecordJson(id: 1, time: 1, name: "1"), RecordJson(id: 2, time: 2, name: "2")]
+        let input = try JSONEncoder().encode(records)
+
+        // Testable function
+        var iterator = try iterateOverRecords(inputData: input, timeAsc: false)
+
+        let first = iterator.next()
+        let second = iterator.next()
+
+        XCTAssertNotNil(first)
+        XCTAssertNotNil(second)
+
+        XCTAssertEqual(first, "2")
+        XCTAssertEqual(second, "1")
+    }
+
     func testIterateOverRecords() throws {
         let input = try generateTestData(count: 10_000, timeRange: -10_000..<10_000)
 
         // Testable function
         var iterator = try iterateOverRecords(inputData: input)
 
+        XCTAssertNotNil(iterator.next())
         while let name = iterator.next() {
             print(name)
         }
