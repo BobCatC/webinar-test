@@ -13,6 +13,18 @@ final class WebinarTestTests: XCTestCase {
         }
     }
 
+    func testIterateOverRecords() throws {
+        let input = try generateTestData(count: 10_000, timeRange: -10_000..<10_000)
+
+        // Testable function
+        var iterator = try iterateOverRecords(inputData: input)
+
+        XCTAssertNotNil(iterator.next())
+        while let name = iterator.next() {
+            print(name)
+        }
+    }
+
     func testIterateTimeAsc() throws {
         let records = [RecordJson(id: 1, time: 1, name: "1"), RecordJson(id: 2, time: 2, name: "2")]
         let input = try JSONEncoder().encode(records)
@@ -45,18 +57,6 @@ final class WebinarTestTests: XCTestCase {
 
         XCTAssertEqual(first, "2")
         XCTAssertEqual(second, "1")
-    }
-
-    func testIterateOverRecords() throws {
-        let input = try generateTestData(count: 10_000, timeRange: -10_000..<10_000)
-
-        // Testable function
-        var iterator = try iterateOverRecords(inputData: input)
-
-        XCTAssertNotNil(iterator.next())
-        while let name = iterator.next() {
-            print(name)
-        }
     }
 
     func testZeroRecords() throws {
